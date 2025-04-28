@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+
+ <script defer data-domain="comes-the-sun.xyz" src="https://plausible.io/js/plausible.js"></script>
+
+  <!-- Google Tag -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DXBHGF3P8R"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DXBHGF3P8R');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>comes-the-sun</title>
+
+  <!-- Use a fixed Swiper version to prevent breaking changes -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/7.4.1/swiper-bundle.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/7.4.1/swiper-bundle.min.js"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .swiper {
+      width: 100%;
+      height: 100%;
+    }
+
+    .swiper-wrapper {
+      display: flex !important;
+      align-items: center;
+    }
+
+    .swiper-slide {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .swiper-slide img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      will-change: transform, opacity;
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      width: 40px;
+      color: #A06646;
+    }
+
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+      font-size: 24px;
+    }
+
+    .swiper-pagination-bullet {
+      background-color: #A06646;
+    }
+
+    .swiper-pagination-bullet-active {
+      background-color: #A06646;
+    }
+  </style>
+
+</head>
+<body>
+
+  <!-- Swiper Container -->
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      <!-- Slides will be added dynamically -->
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+  </div>
+
+  <script>
+    // Define the image version and filenames
+    const version = '3.0.0';
+    const imageFilenames = [
+  'slide.v0426.001.png',
+  'slide.v0426.002.png',
+  'slide.v0426.003.png',
+  'slide.v0426.004.png',
+  'slide.v0426.005.png',
+  'slide.v0426.006.png',
+  'slide.v0426.007.png',
+  'slide.v0426.008.png',
+  'slide.v0426.009.png',
+  'slide.v0426.010.png',
+  'slide.v0426.011.png',
+  'slide.v0426.012.png'
+    ];
+
+    const imagePaths = imageFilenames.map(name => `images/${name}`);
+
+    // Preload images to ensure smooth transition
+    imagePaths.forEach(path => {
+      const img = new Image();
+      img.src = path;
+    });
+
+    // DOMContentLoaded to ensure everything is ready
+    document.addEventListener("DOMContentLoaded", () => {
+      const swiperWrapper = document.querySelector('.swiper-wrapper');
+
+      imagePaths.forEach(imagePath => {
+        const slide = document.createElement('div');
+        slide.classList.add('swiper-slide');
+
+        const img = document.createElement('img');
+        img.src = imagePath;
+        img.alt = 'Slide Image';
+
+        slide.appendChild(img);
+        swiperWrapper.appendChild(slide);
+      });
+
+      // Initialize Swiper
+      new Swiper('.swiper', {
+        loop: true,
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      });
+    });
+  </script>
+
+</body>
+</html>
