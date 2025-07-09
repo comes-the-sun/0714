@@ -214,7 +214,6 @@ async def main():
             print(f"  - {s}")
 
     await show_cost(result, "Workout Plan")
-
     # 🤖 Agent-generated wrap-up
     performed_names = [ex['name'] for ex in selected_exercises if ex['name'] not in skipped]
     if performed_names:
@@ -229,3 +228,69 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+
+exercise_program = {
+    "basic_exercises": [
+        {"name": "Pelvic Tilts", "duration": "10–15 reps", "description": "Supine, focus on core engagement without arching back.", "warning": "Keep movements slow and controlled; avoid overarching."},
+        {"name": "Cat-Cow Stretch", "duration": "8–10 reps", "description": "Gentle spinal mobility; move slowly through flexion/extension.", "warning": "Avoid forcing the range of motion; keep movement smooth."},
+        {"name": "Knee-to-Chest Stretch", "duration": "Hold 20–30 sec/leg", "description": "Helps decompress lumbar spine.", "warning": "Pull leg in gently; stop if you feel strain or discomfort."},
+        {"name": "Supine Marching", "duration": "2 sets of 10 reps", "description": "Keep pelvis stable; engage deep core muscles.", "warning": "Avoid rocking side to side; focus on slow, controlled movement."}
+    ],
+    "standard_exercises": [
+        {"name": "Glute Bridges", "duration": "2–3 sets of 10–12 reps", "description": "Avoid arching lower back; engage glutes and core.", "warning": "Lift hips slowly and avoid pushing through your lower back."},
+        {"name": "Bird Dog (Alt. Arm/Leg Reach)", "duration": "2 sets of 8 reps/side", "description": "Maintain a flat back; avoid twisting.", "warning": "Move limbs with control; avoid shifting weight or rotating torso."},
+        {"name": "Wall Sit (Modified)", "duration": "Hold 20–30 sec x 2", "description": "Keep spine neutral; progress time as tolerated.", "warning": "Don’t let knees go past toes; come out of the position if discomfort arises."},
+        {"name": "Standing Hip Hinge (with dowel or hands-on-hips)", "duration": "2 sets of 10 reps", "description": "Practice proper hip hinge while keeping spine neutral.", "warning": "Keep back straight and avoid bending through the waist."}
+    ],
+    "advanced_exercises": [
+        {"name": "Step-ups (onto low box or stair)", "duration": "2–3 sets of 8–10 reps/leg", "description": "Use controlled tempo; keep spine tall.", "warning": "Step down slowly; avoid leaning forward or using momentum."},
+        {"name": "Bodyweight Squats (to chair)", "duration": "2–3 sets of 10–12 reps", "description": "Ensure knees don’t collapse inward; core tight.", "warning": "Keep heels grounded; stop if knees feel unstable or painful."},
+        {"name": "Side Plank (Modified or Full)", "duration": "Hold 15–30 sec/side x 2", "description": "Great for lateral core and hip strength.", "warning": "Keep body in a straight line; avoid letting hips sag."},
+        {"name": "Farmer’s Carry (light weights)", "duration": "30 sec walk x 3 rounds", "description": "Teaches bracing and posture under load.", "warning": "Keep shoulders back and core engaged; avoid leaning or slouching."}
+    ]
+}
+}
+
+
+def get_yes_no_input(question):
+    while True:
+        answer = input(question + " (yes/no): ").strip().lower()
+        if answer in ['yes', 'no']:
+            return answer
+        else:
+            print("Please enter 'yes' or 'no'.")
+
+def assess_back_pain_risk():
+    print("\nBack Pain Self-Assessment\nAnswer the following questions honestly to determine a safe exercise level.\n")
+
+    # Questions and how they are scored
+    questions = [
+        {"text": "1. Have you experienced sharp, shooting, or radiating pain (e.g., down the leg) in the past 2 weeks?", "safe_answer": "no"},
+        {"text": "2. Are you currently able to lie flat on your back and get up without increasing your back pain?", "safe_answer": "yes"},
+        {"text": "3. Does walking or standing for at least 5 minutes make your back pain worse?", "safe_answer": "no"},
+        {"text": "4. Can you perform basic movements (e.g., bending slightly, lifting a light object) without pain above 4/10 intensity?", "safe_answer": "yes"},
+        {"text": "5. Has a healthcare provider cleared you for gentle or moderate exercise despite your back condition?", "safe_answer": "yes"}
+    ]
+
+    score = 0
+
+    for q in questions:
+        answer = get_yes_no_input(q["text"])
+        if answer == q["safe_answer"]:
+            score += 1
+
+    # Determine category
+    if score <= 2:
+        category = "basic_exercises"
+    elif 3 <= score <= 4:
+        category = "standard_exercises"
+    else:
+        category = "advanced_exercises"
+
+    # Output result
+    print(f"\nYour score: {score}/5")
+    print(f"Recommended exercise category: {category}")
+
+if __name__ == "__main__":
+    assess_back_pain_risk()
+
