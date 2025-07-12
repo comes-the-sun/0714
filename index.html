@@ -15,7 +15,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>comes-the-sun acu</title>
 
-  <!-- Use a fixed Swiper version to prevent breaking changes -->
+  <!-- Swiper Styles and Script -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/7.4.1/swiper-bundle.min.css">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/7.4.1/swiper-bundle.min.js"></script>
 
@@ -86,36 +86,36 @@
   </div>
 
   <script>
-    // Define the image version and filenames
+    // Define image filenames
     const version = '3.0.0';
     const imageFilenames = [
-  'slide.001.png',
-  'slide.002.png',
-  'slide.003.png',
-  'slide.004.png',
-  'slide.005.png',
-  'slide.006.png',
-  'slide.007.png',
-  'slide.008.png',
-  'slide.009.png',
-  'slide.010.png',
-  'slide.011.png',
-  'slide.012.png',
-  'slide.013.png'
+      'slide.001.png',
+      'slide.002.png',
+      'slide.003.png',
+      'slide.004.png',
+      'slide.005.png',
+      'slide.006.png',
+      'slide.007.png',
+      'slide.008.png',
+      'slide.009.png',
+      'slide.010.png',
+      'slide.011.png',
+      'slide.012.png',
+      'slide.013.png'
     ];
 
     const imagePaths = imageFilenames.map(name => `images/${name}`);
 
-    // Preload images to ensure smooth transition
+    // Preload images
     imagePaths.forEach(path => {
       const img = new Image();
       img.src = path;
     });
 
-    // DOMContentLoaded to ensure everything is ready
     document.addEventListener("DOMContentLoaded", () => {
       const swiperWrapper = document.querySelector('.swiper-wrapper');
 
+      // Add slides
       imagePaths.forEach(imagePath => {
         const slide = document.createElement('div');
         slide.classList.add('swiper-slide');
@@ -129,7 +129,7 @@
       });
 
       // Initialize Swiper
-      new Swiper('.swiper', {
+      const swiper = new Swiper('.swiper', {
         loop: true,
         pagination: {
           el: '.swiper-pagination',
@@ -139,7 +139,24 @@
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev',
         },
+        on: {
+          slideChange: function () {
+            const nextButton = document.querySelector('.swiper-button-next');
+            // If on first real slide, change next arrow to white
+            if (this.realIndex === 0) {
+              nextButton.style.color = 'white';
+            } else {
+              nextButton.style.color = '#A06646';
+            }
+          }
+        }
       });
+
+      // Set initial arrow color on page load
+      const nextButton = document.querySelector('.swiper-button-next');
+      if (swiper.realIndex === 0) {
+        nextButton.style.color = 'white';
+      }
     });
   </script>
 
